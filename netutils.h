@@ -1,0 +1,40 @@
+/**
+ *  Copyright (C) 2011-2012  Juho Vähä-Herttua
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ */
+
+#ifndef NETUTILS_H
+#define NETUTILS_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+int netutils_init();
+void netutils_cleanup();
+int netutils_init_socket(unsigned short *port, int use_ipv6, int use_udp);
+int netutils_init_socket_bind(unsigned short *port, int use_ipv6, int use_udp, const char *bind_addr);
+void netutils_set_bind_address(const char *addr);
+const char *netutils_get_bind_address(void);
+unsigned char *netutils_get_address(void *sockaddr, int *length, unsigned int *zone_id, unsigned short *port);
+int netutils_parse_address(int family, const char *src, void *dst, int dstlen);
+
+/* for p2p support (macOS only ) */
+#if defined(__APPLE__) && defined(UXPLAY_HAVE_APPLE_P2P)
+void netutils_set_peer_to_peer(int enabled);
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
